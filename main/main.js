@@ -32,7 +32,7 @@ function mainMenu() {
 function addProduct() {
     console.log('Ban da chon vao muc them moi, xin moi ban nhap');
     var id = +input.question('Nhap id san pham: ');
-    var name = input.question('Nhap te san pham: ');
+    var name = input.question('Nhap ten san pham: ');
     var type = input.question('Nhap loai hang: ');
     var price = +input.question('Nhap gia: ');
     var quantity = +input.question('Nhap so luong: ');
@@ -42,16 +42,40 @@ function addProduct() {
     listProduct.add(product);
 }
 function showProductFind() {
-    var id = +input.question('Nhap id san pham ban muon tim: ');
-    if (listProduct.findById(id) == -1) {
-        console.log('<<<<<Không hàng nào có id này>>>>>');
+    var name = input.question('Nhap ten san pham ban can tim: ');
+    // this.listProduct.filter(item => item.name.includes(name));
+    // let id = +input.question('Nhap id san pham ban muon tim: ');
+    //
+    // if (listProduct.findById(id) == -1) {
+    //     console.log('<<<<<Không hàng nào có id này>>>>>')
+    // }
+    // else {
+    //     console.log(listProduct.showProductFind(id));
+    // }
+    var stringName = new RegExp(name);
+    var sum = 0;
+    for (var i = 0; i < listProduct.listProduct.length; i++) {
+        var testName = stringName.test(listProduct.listProduct[i].name);
+        if (testName) {
+            console.log("id: ".concat(listProduct.listProduct[i].id, " - ten: ").concat(listProduct.listProduct[i].name, " - loai hang: ").concat(listProduct.listProduct[i].type, " - gia: ").concat(listProduct.listProduct[i].price, " - so luong: ").concat(listProduct.listProduct[i].quantity, " - ngay: ").concat(listProduct.listProduct[i].dateCreated));
+            sum++;
+        }
     }
-    else {
-        console.log(listProduct.showProductFind(id));
+    if (sum == 0) {
+        console.log('<<<Khong co hang>>>');
     }
 }
 function showListProduct() {
-    console.log(listProduct.showAll());
+    // console.log(listProduct.showAll());
+    if (listProduct.listProduct.length == 0) {
+        console.log('<<< khong co cai hang nao >>>');
+    }
+    else {
+        console.log('<<< Danh sach san pham bao gom >>>');
+        for (var i = 0; i < listProduct.listProduct.length; i++) {
+            console.log("id: ".concat(listProduct.listProduct[i].id, " - ten: ").concat(listProduct.listProduct[i].name, " - loai hang: ").concat(listProduct.listProduct[i].type, " - gia: ").concat(listProduct.listProduct[i].price, " - so luong: ").concat(listProduct.listProduct[i].quantity, " - ngay: ").concat(listProduct.listProduct[i].dateCreated));
+        }
+    }
 }
 function deleteProduct() {
     var id = +input.question('Nhap id san pham ban muon xoa: ');
@@ -60,6 +84,7 @@ function deleteProduct() {
     }
     else {
         listProduct["delete"](id);
+        console.log("- ban vua xoa san pham co id: ".concat(id, " -"));
     }
 }
 function editProduct() {
@@ -80,3 +105,4 @@ function editProduct() {
     }
 }
 mainMenu();
+// this.listProduct.filter(item => item.name.includes(name))

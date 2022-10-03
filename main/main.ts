@@ -34,7 +34,7 @@ function mainMenu() {
 function addProduct() {
     console.log('Ban da chon vao muc them moi, xin moi ban nhap')
     let id = +input.question('Nhap id san pham: ');
-    let name = input.question('Nhap te san pham: ');
+    let name = input.question('Nhap ten san pham: ');
     let type = input.question('Nhap loai hang: ');
     let price = +input.question('Nhap gia: ');
     let quantity = +input.question('Nhap so luong: ');
@@ -47,17 +47,43 @@ function addProduct() {
 }
 
 function showProductFind() {
-    let id = +input.question('Nhap id san pham ban muon tim: ');
-    if (listProduct.findById(id) == -1) {
-        console.log('<<<<<Không hàng nào có id này>>>>>')
+    let name = input.question('Nhap ten san pham ban can tim: ')
+    // this.listProduct.filter(item => item.name.includes(name));
+
+    // let id = +input.question('Nhap id san pham ban muon tim: ');
+    //
+    // if (listProduct.findById(id) == -1) {
+    //     console.log('<<<<<Không hàng nào có id này>>>>>')
+    // }
+    // else {
+    //     console.log(listProduct.showProductFind(id));
+    // }
+
+    let stringName = new RegExp(name);
+    let sum = 0;
+    for (let i = 0; i < listProduct.listProduct.length; i++) {
+        let testName = stringName.test(listProduct.listProduct[i].name);
+        if(testName) {
+            console.log(`id: ${listProduct.listProduct[i].id} - ten: ${listProduct.listProduct[i].name} - loai hang: ${listProduct.listProduct[i].type} - gia: ${listProduct.listProduct[i].price} - so luong: ${listProduct.listProduct[i].quantity} - ngay: ${listProduct.listProduct[i].dateCreated}`);
+            sum ++;
+        }
     }
-    else {
-        console.log(listProduct.showProductFind(id));
+    if(sum == 0) {
+        console.log('<<<Khong co hang>>>');
     }
 }
 
 function showListProduct() {
-    console.log(listProduct.showAll());
+    // console.log(listProduct.showAll());
+    if(listProduct.listProduct.length == 0) {
+        console.log('<<< khong co cai hang nao >>>');
+    }
+    else {
+        console.log('<<< Danh sach san pham bao gom >>>');
+        for (let i = 0; i < listProduct.listProduct.length; i++) {
+            console.log(`id: ${listProduct.listProduct[i].id} - ten: ${listProduct.listProduct[i].name} - loai hang: ${listProduct.listProduct[i].type} - gia: ${listProduct.listProduct[i].price} - so luong: ${listProduct.listProduct[i].quantity} - ngay: ${listProduct.listProduct[i].dateCreated}`);
+        }
+    }
 }
 
 function deleteProduct() {
@@ -67,6 +93,7 @@ function deleteProduct() {
     }
     else {
         listProduct.delete(id);
+        console.log(`- ban vua xoa san pham co id: ${id} -`)
     }
 }
 
